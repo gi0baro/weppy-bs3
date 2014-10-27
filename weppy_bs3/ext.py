@@ -1,3 +1,14 @@
+# -*- coding: utf-8 -*-
+"""
+    weppy_bs3.ext
+    -------------
+
+    Provides the bootstrap3 extension for weppy
+
+    :copyright: (c) 2014 by Giovanni Barillari
+    :license: BSD, see LICENSE for more details.
+"""
+
 import os
 import shutil
 from weppy import tag, asis
