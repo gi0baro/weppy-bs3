@@ -96,8 +96,8 @@ _datepicker_xml = """
         $('#%(divid)s').datetimepicker({
             pickTime: false,
             format: '%(format)s',
-            minDate: '%(minDate)s',
-            maxDate: '%(maxDate)s',
+            minDate: %(minDate)s,
+            maxDate: %(maxDate)s,
             icons: {
                 date: "%(icon_date)s",
                 up: "%(icon_up)s",
@@ -129,8 +129,8 @@ _datetimepicker_xml = """
         $('#%(divid)s').datetimepicker({
             useSeconds: %(use_seconds)s,
             format: '%(format)s',
-            minDate: '%(minDate)s',
-            maxDate: '%(maxDate)s',
+            minDate: %(minDate)s,
+            maxDate: %(maxDate)s,
             icons: {
                 date: "%(icon_date)s",
                 time: "%(icon_time)s",
@@ -157,16 +157,20 @@ class BS3FormStyle(FormStyle):
             s = asis(_datepicker_xml % dict(
                      divid=fid+"_cat",
                      format=dformat,
-                     minDate=minDate,
-                     maxDate=maxDate,
+                     minDate=dates["minDate"],
+                     maxDate=dates["maxDate"],
                      icon_date=icon_date,
                      icon_up=icon_up,
                      icon_down=icon_down))
             return s
 
         icon_date = attr.get('icon_date', attr['env'].icon_date)
-        minDate = attr.get('minDate', '$.fn.datetimepicker.defaults.minDate')
-        maxDate = attr.get('maxDate', '$.fn.datetimepicker.defaults.maxDate')
+        dates = {}
+        for dname in ["minDate", "maxDate"]:
+            if not attr.get(dname):
+                dates[dname] = '$.fn.datetimepicker.defaults.'+dname
+            else:
+                dates[dname] = '"'+attr[dname]+'"'
         fid = _id or field.name
         res = []
         js = load_js()
@@ -186,10 +190,11 @@ class BS3FormStyle(FormStyle):
             tformat = attr.get('time_format', attr['env'].time_format)
             icon_up = attr.get('icon_up', attr['env'].icon_up)
             icon_down = attr.get('icon_down', attr['env'].icon_down)
+            pick_seconds = "true" if use_seconds else "false"
             s = asis(_timepicker_xml % dict(
                      divid=fid+"_cat",
                      format=tformat,
-                     use_seconds=use_seconds,
+                     use_seconds=pick_seconds,
                      icon_time=icon_time,
                      icon_up=icon_up,
                      icon_down=icon_down))
@@ -221,12 +226,13 @@ class BS3FormStyle(FormStyle):
             icon_time = attr.get('icon_time', attr['env'].icon_time)
             icon_up = attr.get('icon_up', attr['env'].icon_up)
             icon_down = attr.get('icon_down', attr['env'].icon_down)
+            pick_seconds = "true" if use_seconds else "false"
             s = asis(_datetimepicker_xml % dict(
                      divid=fid+"_cat",
                      format=dformat,
-                     use_seconds=use_seconds,
-                     minDate=minDate,
-                     maxDate=maxDate,
+                     use_seconds=pick_seconds,
+                     minDate=dates["minDate"],
+                     maxDate=dates["maxDate"],
                      icon_date=icon_date,
                      icon_time=icon_time,
                      icon_up=icon_up,
@@ -234,8 +240,12 @@ class BS3FormStyle(FormStyle):
             return s
 
         icon_date = attr.get('icon_date', attr['env'].icon_date)
-        minDate = attr.get('minDate', '$.fn.datetimepicker.defaults.minDate')
-        maxDate = attr.get('maxDate', '$.fn.datetimepicker.defaults.maxDate')
+        dates = {}
+        for dname in ["minDate", "maxDate"]:
+            if not attr.get(dname):
+                dates[dname] = '$.fn.datetimepicker.defaults.'+dname
+            else:
+                dates[dname] = '"'+attr[dname]+'"'
         use_seconds = attr.get('time_pickseconds',
                                attr['env'].time_pickseconds)
         fid = _id or field.name
@@ -261,7 +271,7 @@ class BS3FormStyle(FormStyle):
 
     def style_widget(self, widget):
         wtype = widget['_class'].split(' ')[0]
-        if wtype not in ["boolean", "upload_wrap"]:
+        if wtype not in ["boolean", "upload_wrap", "input-group"]:
             widget['_class'] += " form-control"
 
     def create_label(self, label):
