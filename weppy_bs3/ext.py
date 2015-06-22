@@ -144,9 +144,9 @@ _datetimepicker_xml = """
 
 class BS3FormStyle(FormStyle):
     @staticmethod
-    def widget_boolean(attr, field, value, _id=None):
-        return FormStyle.widget_boolean(attr, field, value,
-                                        _class="boolean checkbox", _id=_id)
+    def widget_bool(attr, field, value, _id=None):
+        return FormStyle.widget_bool(attr, field, value,
+                                     _class="bool checkbox", _id=_id)
 
     @staticmethod
     def widget_date(attr, field, value, _class='date', _id=None):
@@ -271,7 +271,7 @@ class BS3FormStyle(FormStyle):
 
     def style_widget(self, widget):
         wtype = widget['_class'].split(' ')[0]
-        if wtype not in ["boolean", "upload_wrap", "input-group"]:
+        if wtype not in ["bool", "upload_wrap", "input-group"]:
             widget['_class'] += " form-control"
 
     def create_label(self, label):
