@@ -68,7 +68,7 @@ class BS3(Extension):
 
 
 class BS3Lexer(TemplateLexer):
-    def process(self, value, top, stack):
+    def process(self, value):
         for asset in self.ext.env.assets:
             file_ext = asset.rsplit(".", 1)[-1]
             url = "/static/"+self.ext.config.static_folder+"/"+asset
@@ -77,12 +77,12 @@ class BS3Lexer(TemplateLexer):
             else:
                 static = '<link rel="stylesheet" href="'+url+'" type="text/css">'
             node = self.parser.create_htmlnode(static, pre_extend=False)
-            top.append(node)
+            self.top.append(node)
         ## add font awesome from external cdn
         url = '//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css'
         static = '<link href="'+url+'" rel="stylesheet">'
         node = self.parser.create_htmlnode(static, pre_extend=False)
-        top.append(node)
+        self.top.append(node)
 
 
 class BS3Template(TemplateExtension):
