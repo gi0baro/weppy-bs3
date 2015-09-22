@@ -68,6 +68,8 @@ class BS3(Extension):
 
 
 class BS3Lexer(TemplateLexer):
+    evaluate_value = False
+
     def process(self, value):
         for asset in self.ext.env.assets:
             file_ext = asset.rsplit(".", 1)[-1]
