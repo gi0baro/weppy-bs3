@@ -5,7 +5,7 @@
 
     Provides the bootstrap3 extension for weppy
 
-    :copyright: (c) 2014 by Giovanni Barillari
+    :copyright: (c) 2015 by Giovanni Barillari
     :license: BSD, see LICENSE for more details.
 """
 
@@ -81,7 +81,7 @@ class BS3Lexer(TemplateLexer):
             node = self.parser.create_htmlnode(static, pre_extend=False)
             self.top.append(node)
         ## add font awesome from external cdn
-        url = '//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css'
+        url = '//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css'
         static = '<link href="'+url+'" rel="stylesheet">'
         node = self.parser.create_htmlnode(static, pre_extend=False)
         self.top.append(node)
