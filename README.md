@@ -18,4 +18,8 @@ app.use_extension(BS3)
 
 ## Documentation
 
-The documentation will be soon available.
+The complete documentation is available on the [weppy extensions registry](http://weppy.org/extensions/bs3).
+
+## License
+
+weppy-BS3 is released under BSD license. Check the LICENSE file for more details.
