@@ -10,7 +10,7 @@ from setuptools import setup
 
 setup(
     name='weppy-BS3',
-    version='0.4',
+    version='0.5',
     url='https://github.com/gi0baro/weppy-bs3',
     license='BSD',
     author='Giovanni Barillari',
@@ -22,7 +22,7 @@ setup(
     include_package_data=True,
     platforms='any',
     install_requires=[
-        'weppy>=0.5',
+        'weppy>=1.0',
     ],
     classifiers=[
         'Development Status :: 4 - Beta',

@@ -11,9 +11,9 @@
 
 import os
 import shutil
-from weppy import tag, asis
 from weppy.extensions import Extension, TemplateExtension, TemplateLexer
 from weppy.forms import FormStyle
+from weppy.html import tag, asis
 
 
 class BS3(Extension):
@@ -37,15 +37,10 @@ class BS3(Extension):
         'bootstrap-datetimepicker.min.js',
         'bootstrap-datetimepicker.min.css']
 
-    def _load_config(self):
-        for key, value in self.default_config.items():
-            self.config[key] = self.config.get(key, value)
-        self.env.folder = os.path.join(self.app.static_path,
-                                       self.config.static_folder)
-
     def on_load(self):
         # init and create required folder
-        self._load_config()
+        self.env.folder = os.path.join(
+            self.app.static_path, self.config.static_folder)
         if not os.path.exists(self.env.folder):
             os.mkdir(self.env.folder)
         # load assets and copy to app
