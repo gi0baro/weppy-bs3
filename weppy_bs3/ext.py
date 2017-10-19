@@ -68,16 +68,22 @@ class BS3Lexer(TemplateLexer):
     def process(self, value):
         for asset in self.ext.env.assets:
             file_ext = asset.rsplit(".", 1)[-1]
-            url = "/static/"+self.ext.config.static_folder+"/"+asset
+            url = "/static/" + self.ext.config.static_folder + "/" + asset
             if file_ext == "js":
-                static = '<script type="text/javascript" src="'+url+'"></script>'
+                static = (
+                    '<script type="text/javascript" src="' + url +
+                    '"></script>')
             else:
-                static = '<link rel="stylesheet" href="'+url+'" type="text/css">'
+                static = (
+                    '<link rel="stylesheet" href="' + url +
+                    '" type="text/css">')
             node = self.parser.create_htmlnode(static, pre_extend=False)
             self.top.append(node)
         ## add font awesome from external cdn
-        url = '//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css'
-        static = '<link href="'+url+'" rel="stylesheet">'
+        url = (
+            '//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/' +
+            'font-awesome.min.css')
+        static = '<link href="' + url + '" rel="stylesheet">'
         node = self.parser.create_htmlnode(static, pre_extend=False)
         self.top.append(node)
 
@@ -152,7 +158,7 @@ class BS3FormStyle(FormStyle):
             icon_up = attr.get('icon_up', attr['env'].icon_up)
             icon_down = attr.get('icon_down', attr['env'].icon_down)
             s = asis(_datepicker_xml % dict(
-                     divid=fid+"_cat",
+                     divid=fid + "_cat",
                      format=dformat,
                      minDate=dates["minDate"],
                      maxDate=dates["maxDate"],
@@ -165,21 +171,20 @@ class BS3FormStyle(FormStyle):
         dates = {}
         for dname in ["minDate", "maxDate"]:
             if not attr.get(dname):
-                dates[dname] = '$.fn.datetimepicker.defaults.'+dname
+                dates[dname] = '$.fn.datetimepicker.defaults.' + dname
             else:
-                dates[dname] = '"'+attr[dname]+'"'
+                dates[dname] = '"' + attr[dname] + '"'
         fid = _id or field.name
         res = []
         js = load_js()
         res.append(
             tag.input(
                 _name=field.name, _type='text', _id=fid, _class="form-control",
-                value=str(value) if value is not None else '')
-            )
-        res.append(tag.span(tag.span(_class=icon_date),
-                   _class="input-group-addon"))
+                _value=str(value) if value is not None else ''))
+        res.append(
+            tag.span(tag.span(_class=icon_date), _class="input-group-addon"))
         res.append(js)
-        return tag.div(*res, _id=fid+"_cat", _class='input-group date')
+        return tag.div(*res, _id=fid + "_cat", _class='input-group date')
 
     @staticmethod
     def widget_time(attr, field, value, _class='time', _id=None):
@@ -188,13 +193,14 @@ class BS3FormStyle(FormStyle):
             icon_up = attr.get('icon_up', attr['env'].icon_up)
             icon_down = attr.get('icon_down', attr['env'].icon_down)
             pick_seconds = "true" if use_seconds else "false"
-            s = asis(_timepicker_xml % dict(
-                     divid=fid+"_cat",
-                     format=tformat,
-                     use_seconds=pick_seconds,
-                     icon_time=icon_time,
-                     icon_up=icon_up,
-                     icon_down=icon_down))
+            s = asis(
+                _timepicker_xml % dict(
+                    divid=fid + "_cat",
+                    format=tformat,
+                    use_seconds=pick_seconds,
+                    icon_time=icon_time,
+                    icon_up=icon_up,
+                    icon_down=icon_down))
             return s
 
         icon_time = attr.get('icon_time', attr['env'].icon_time)
@@ -209,12 +215,11 @@ class BS3FormStyle(FormStyle):
         res.append(
             tag.input(
                 _name=field.name, _type='text', _id=fid, _class="form-control",
-                value=_value)
-            )
-        res.append(tag.span(tag.span(_class=icon_time),
-                   _class="input-group-addon"))
+                _value=_value))
+        res.append(
+            tag.span(tag.span(_class=icon_time), _class="input-group-addon"))
         res.append(js)
-        return tag.div(*res, _id=fid+"_cat", _class='input-group time')
+        return tag.div(*res, _id=fid + "_cat", _class='input-group time')
 
     @staticmethod
     def widget_datetime(attr, field, value, _class='datetime', _id=None):
@@ -224,27 +229,28 @@ class BS3FormStyle(FormStyle):
             icon_up = attr.get('icon_up', attr['env'].icon_up)
             icon_down = attr.get('icon_down', attr['env'].icon_down)
             pick_seconds = "true" if use_seconds else "false"
-            s = asis(_datetimepicker_xml % dict(
-                     divid=fid+"_cat",
-                     format=dformat,
-                     use_seconds=pick_seconds,
-                     minDate=dates["minDate"],
-                     maxDate=dates["maxDate"],
-                     icon_date=icon_date,
-                     icon_time=icon_time,
-                     icon_up=icon_up,
-                     icon_down=icon_down))
+            s = asis(
+                _datetimepicker_xml % dict(
+                    divid=fid + "_cat",
+                    format=dformat,
+                    use_seconds=pick_seconds,
+                    minDate=dates["minDate"],
+                    maxDate=dates["maxDate"],
+                    icon_date=icon_date,
+                    icon_time=icon_time,
+                    icon_up=icon_up,
+                    icon_down=icon_down))
             return s
 
         icon_date = attr.get('icon_date', attr['env'].icon_date)
         dates = {}
         for dname in ["minDate", "maxDate"]:
             if not attr.get(dname):
-                dates[dname] = '$.fn.datetimepicker.defaults.'+dname
+                dates[dname] = '$.fn.datetimepicker.defaults.' + dname
             else:
-                dates[dname] = '"'+attr[dname]+'"'
-        use_seconds = attr.get('time_pickseconds',
-                               attr['env'].time_pickseconds)
+                dates[dname] = '"' + attr[dname] + '"'
+        use_seconds = attr.get(
+            'time_pickseconds', attr['env'].time_pickseconds)
         fid = _id or field.name
         res = []
         js = load_js()
@@ -254,12 +260,12 @@ class BS3FormStyle(FormStyle):
         res.append(
             tag.input(
                 _name=field.name, _type='text', _id=fid, _class="form-control",
-                value=_value)
-            )
-        res.append(tag.span(tag.span(_class=icon_date),
-                   _class="input-group-addon"))
+                _value=_value))
+        res.append(
+            tag.span(
+                tag.span(_class=icon_date), _class="input-group-addon"))
         res.append(js)
-        return tag.div(*res, _id=fid+"_cat", _class='input-group datetime')
+        return tag.div(*res, _id=fid + "_cat", _class='input-group datetime')
 
     def on_start(self):
         from weppy.expose import Expose
