@@ -11,6 +11,8 @@
 
 import os
 import shutil
+
+from weppy.ctx import current
 from weppy.extensions import Extension, TemplateExtension, TemplateLexer
 from weppy.forms import FormStyle
 from weppy.html import tag, asis
@@ -268,8 +270,7 @@ class BS3FormStyle(FormStyle):
         return tag.div(*res, _id=fid + "_cat", _class='input-group datetime')
 
     def on_start(self):
-        from weppy.expose import Expose
-        self.attr['env'] = Expose.application.ext.BS3.config
+        self.attr['env'] = current.app.ext.BS3.config
         self.parent = tag.fieldset()
 
     def style_widget(self, widget):
